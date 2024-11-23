@@ -311,18 +311,40 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: '风を共に舞う気持ち',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731419.mp3',
-      cover:
-        'https://p2.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+      name: 'Morelia's Waltz',
+      artist: 'Ernesto Cortazar',
+      url: 'https://music.163.com/song/media/outer/url?id=1313376.mp3',
+      cover: 'http://p2.music.126.net/igW2rwVxnBDsF2SOsY7xqQ==/109951164850859958.jpg'
     },
     {
-      name: '王都グランセル',
-      artist: 'Falcom Sound Team jdk',
-      url: 'https://music.163.com/song/media/outer/url?id=731355.mp3',
-      cover:
-        'https://p1.music.126.net/kn6ugISTonvqJh3LHLaPtQ==/599233837187278.jpg'
+      name: 'Passacaglia',
+      artist: 'Secret Garden',
+      url: 'https://music.163.com/song/media/outer/url?id=4278492.mp3',
+      cover: 'http://p1.music.126.net/rq2Te_Y6hN2uXKqR1O7D5g==/109951167833888673.jpg'
+    },
+    {
+      name: 'Historiette #5',
+      artist: 'Fabrizio Paterlini',
+      url: 'https://music.163.com/song/media/outer/url?id=446509000.mp3',
+      cover: 'http://p2.music.126.net/pGit6l01e4ONpsIIW3mDEA==/18184822812595731.jpg'
+    },
+    {
+      name: 'Dancing Waves',
+      artist: 'Ernesto Cortazar',
+      url: 'https://music.163.com/song/media/outer/url?id=1313361.mp3',
+      cover: 'http://p1.music.126.net/igW2rwVxnBDsF2SOsY7xqQ==/109951164850859958.jpg'
+    },
+    {
+      name: 'Beethoven's Silence',
+      artist: 'Ernesto Cortazar',
+      url: 'https://music.163.com/song/media/outer/url?id=1314007.mp3',
+      cover: 'http://p2.music.126.net/jWv6ihpOx56igrADSUvU3g==/109951164851850480.jpg'
+    },
+    {
+      name: 'La la Land',
+      artist: 'Brooklyn Duo',
+      url: 'https://music.163.com/song/media/outer/url?id=467665265.mp3',
+      cover: 'http://p1.music.126.net/sznfqkPcdnAuVjO1Veg4xA==/18833534674022777.jpg'
     }
   ],
   MUSIC_PLAYER_METING: process.env.NEXT_PUBLIC_MUSIC_PLAYER_METING || false, // 是否要开启 MetingJS，从平台获取歌单。会覆盖自定义的 MUSIC_PLAYER_AUDIO_LIST，更多配置信息：https://github.com/metowolf/MetingJS
