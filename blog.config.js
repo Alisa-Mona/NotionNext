@@ -311,7 +311,7 @@ const BLOG = {
   MUSIC_PLAYER_AUDIO_LIST: [
     // 示例音乐列表。除了以下配置外，还可配置歌词，具体配置项看此文档 https://aplayer.js.org/#/zh-Hans/
     {
-      name: 'Morelia's Waltz',
+      name: 'Morelia\'s Waltz',
       artist: 'Ernesto Cortazar',
       url: 'https://music.163.com/song/media/outer/url?id=1313376.mp3',
       cover: 'http://p2.music.126.net/igW2rwVxnBDsF2SOsY7xqQ==/109951164850859958.jpg'
@@ -335,7 +335,7 @@ const BLOG = {
       cover: 'http://p1.music.126.net/igW2rwVxnBDsF2SOsY7xqQ==/109951164850859958.jpg'
     },
     {
-      name: 'Beethoven's Silence',
+      name: 'Beethoven\'s Silence',
       artist: 'Ernesto Cortazar',
       url: 'https://music.163.com/song/media/outer/url?id=1314007.mp3',
       cover: 'http://p2.music.126.net/jWv6ihpOx56igrADSUvU3g==/109951164851850480.jpg'
