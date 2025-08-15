@@ -22,7 +22,8 @@ const Style = () => {
         background-color: #f5f5f5;
       }
       .dark #theme-hexo body {
-        background-color: #0e0e0e; /* 深灰，减少对比 */
+        background-color: rgba(14, 14, 14, 0.6); /* 深灰半透明 */
+        backdrop-filter: blur(2px); /* 背景虚化一点，文字更清晰 */
       }
 
       /*  菜单下划线动画 */
