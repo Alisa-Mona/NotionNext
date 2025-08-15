@@ -9,7 +9,7 @@ import CONFIG from './config'
  */
 const Style = () => {
   // 从配置中获取主题色，如果没有配置则使用默认值 #928CEE
-  const themeColor = siteConfig('HEXO_THEME_COLOR', '#B9A484', CONFIG) // 米金色
+  const themeColor = siteConfig('HEXO_THEME_COLOR', '#928CEE', CONFIG)
 
   return (
     <style jsx global>{`
@@ -195,11 +195,11 @@ const Style = () => {
         height: 100%;
         background: linear-gradient(
           to bottom,
-          rgba(0, 0, 0, 0.3) 0%,
-          rgba(0, 0, 0, 0.1) 15%,
-          rgba(0, 0, 0, 0) 30%,
-          rgba(0, 0, 0, 0.1) 75%,
-          rgba(0, 0, 0, 0.3) 100%
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0.2) 10%,
+          rgba(0, 0, 0, 0) 25%,
+          rgba(0, 0, 0, 0.2) 75%,
+          rgba(0, 0, 0, 0.5) 100%
         );
       }
 
@@ -210,7 +210,7 @@ const Style = () => {
 
       // 选中字体颜色
       ::selection {
-        background: color-mix(in srgb, var(--theme-color) 50%, white);
+        background: color-mix(in srgb, var(--theme-color) 30%, transparent);
       }
 
       // 自定义滚动条
@@ -225,7 +225,6 @@ const Style = () => {
 
       ::-webkit-scrollbar-thumb {
         background-color: var(--theme-color);
-        border-radius: 3px;
       }
 
       * {
