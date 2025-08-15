@@ -22,7 +22,7 @@ const Style = () => {
         background-color: #f5f5f5;
       }
       .dark #theme-hexo body {
-        background-color: #121826
+        background-color: #121826;
       }
 
       /*  菜单下划线动画 */
