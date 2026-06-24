@@ -2,6 +2,19 @@ import { siteConfig } from '@/lib/config'
 import Head from 'next/head'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+const getTargetImageWidth = (width, maxWidth) => {
+  const parsedWidth = Number(width)
+  const parsedMaxWidth = Number(maxWidth)
+
+  if (Number.isFinite(parsedWidth) && parsedWidth > 0) {
+    return Number.isFinite(parsedMaxWidth) && parsedMaxWidth > 0
+      ? Math.min(parsedWidth, parsedMaxWidth)
+      : parsedWidth
+  }
+
+  return maxWidth
+}
+
 /**
  * 图片懒加载
  * @param {*} param0
@@ -23,10 +36,13 @@ export default function LazyImage({
   style
 }) {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH')
+  const targetImageWidth = getTargetImageWidth(width, maxWidth)
   const defaultPlaceholderSrc = siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
   const imageRef = useRef(null)
   const [currentSrc, setCurrentSrc] = useState(
-    placeholderSrc || defaultPlaceholderSrc
+    priority && src
+      ? adjustImgSize(src, targetImageWidth)
+      : placeholderSrc || defaultPlaceholderSrc
   )
 
   /**
@@ -53,7 +69,8 @@ export default function LazyImage({
   }, [defaultPlaceholderSrc, fallbackSrc, placeholderSrc])
 
   useEffect(() => {
-    const adjustedImageSrc = adjustImgSize(src, maxWidth) || defaultPlaceholderSrc
+    const adjustedImageSrc =
+      adjustImgSize(src, targetImageWidth) || defaultPlaceholderSrc
     const imageElement = imageRef.current
     const handleImageLoaded = () => {
       if (typeof onLoad === 'function') {
@@ -127,7 +144,7 @@ export default function LazyImage({
     }
   }, [
     src,
-    maxWidth,
+    targetImageWidth,
     priority,
     defaultPlaceholderSrc,
     fallbackSrc,
@@ -146,8 +163,6 @@ export default function LazyImage({
     onError: handleImageError,
     className: `${className || ''} lazy-image-placeholder`,
     style,
-    width: width || 'auto',
-    height: height || 'auto',
     onClick,
     // 性能优化属性
     loading: priority ? 'eager' : 'lazy',
@@ -159,6 +174,9 @@ export default function LazyImage({
 
   if (id) imgProps.id = id
   if (title) imgProps.title = title
+  if (width) imgProps.width = width
+  if (height) imgProps.height = height
+  if (priority) imgProps.fetchpriority = 'high'
 
   if (!src) {
     return null
@@ -171,7 +189,12 @@ export default function LazyImage({
       {/* 预加载 */}
       {priority && (
         <Head>
-          <link rel='preload' as='image' href={adjustImgSize(src, maxWidth)} />
+          <link
+            rel='preload'
+            as='image'
+            href={adjustImgSize(src, targetImageWidth)}
+            fetchpriority='high'
+          />
         </Head>
       )}
     </>
@@ -190,9 +213,14 @@ const adjustImgSize = (src, maxWidth) => {
   }
   const screenWidth =
     (typeof window !== 'undefined' && window?.screen?.width) || maxWidth
+  const parsedMaxWidth = Number(maxWidth)
+  const targetWidth =
+    Number.isFinite(parsedMaxWidth) && parsedMaxWidth > 0
+      ? Math.min(screenWidth, parsedMaxWidth)
+      : screenWidth
 
   // 屏幕尺寸大于默认图片尺寸，没必要再压缩
-  if (screenWidth > maxWidth) {
+  if (!targetWidth) {
     return src
   }
 
@@ -203,6 +231,6 @@ const adjustImgSize = (src, maxWidth) => {
 
   // 使用正则表达式替换 width/w 参数
   return src
-    .replace(widthRegex, `width=${screenWidth}`)
-    .replace(wRegex, `w=${screenWidth}`)
+    .replace(widthRegex, `width=${targetWidth}`)
+    .replace(wRegex, `w=${targetWidth}`)
 }

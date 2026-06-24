@@ -191,6 +191,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: 'Notion 数据库', link: '/user-guide/notion-database' },
+            { text: '社区站数据库模板', link: '/user-guide/notion/community-site-template' },
             { text: '排版示例', link: '/user-guide/notion/example-article' },
             { text: '备份 Notion', link: '/user-guide/notion/notion-backup' },
             { text: 'Notion 模板', link: '/user-guide/notion/notion-template' },
@@ -332,6 +333,7 @@ export default defineConfig({
           items: [
             { text: '开发文档首页', link: '/developer/' },
             { text: '快速上手', link: '/developer/GETTING_STARTED' },
+            { text: '愿景与路线图', link: '/developer/VISION_ROADMAP' },
             { text: '架构总览', link: '/developer/ARCHITECTURE' },
             { text: '目录与模块', link: '/developer/PROJECT_STRUCTURE' },
             { text: '配置体系', link: '/developer/CONFIGURATION' },
@@ -346,6 +348,7 @@ export default defineConfig({
             { text: '维护者手册', link: '/developer/MAINTAINER_RUNBOOK.zh-CN' },
             { text: '版本更新说明', link: '/developer/UPDATE' },
             { text: '社区路线图', link: '/developer/COMMUNITY_SITE_ROADMAP' },
+            { text: '5.0 愿景与参与方向', link: '/developer/VISION_ROADMAP' },
             { text: 'RFC', link: '/developer/rfc/' }
           ]
         },
