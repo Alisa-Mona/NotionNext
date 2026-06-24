@@ -5,14 +5,54 @@ import Document, { Head, Html, Main, NextScript } from 'next/document'
 const fontAwesomeLoadScript = BLOG.FONT_AWESOME
   ? `
 (function() {
-  var link = document.getElementById('font-awesome-css');
-  if (!link) return;
-  var enable = function() { link.media = 'all'; };
-  if (link.sheet) {
-    enable();
-  } else {
-    link.addEventListener('load', enable, { once: true });
-  }
+  var href = '${BLOG.FONT_AWESOME}';
+  var storageKey = 'notionnext-font-awesome-loaded';
+  var loaded = false;
+
+  var load = function() {
+    if (loaded || document.getElementById('font-awesome-css')) return;
+    loaded = true;
+    var link = document.createElement('link');
+    link.id = 'font-awesome-css';
+    link.rel = 'stylesheet';
+    link.href = href;
+    link.crossOrigin = 'anonymous';
+    link.referrerPolicy = 'no-referrer';
+    link.onload = function() {
+      try { localStorage.setItem(storageKey, '1'); } catch (e) {}
+      document.documentElement.classList.add('fontawesome-ready');
+    };
+    document.head.appendChild(link);
+  };
+
+  try {
+    if (localStorage.getItem(storageKey) === '1') {
+      setTimeout(load, 0);
+      return;
+    }
+  } catch (e) {}
+
+  var intentEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+  var onIntent = function() {
+    clearIntentEvents();
+    load();
+  };
+  var clearIntentEvents = function() {
+    intentEvents.forEach(function(eventName) {
+      window.removeEventListener(eventName, onIntent);
+    });
+  };
+
+  intentEvents.forEach(function(eventName) {
+    window.addEventListener(eventName, onIntent, { once: true, passive: true });
+  });
+
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      clearIntentEvents();
+      load();
+    }, 8000);
+  }, { once: true });
 })()
 `
   : ''
@@ -58,40 +98,16 @@ class MyDocument extends Document {
     return (
       <Html lang={BLOG.LANG}>
         <Head>
-          {BLOG.FONT_AWESOME && (
-            <>
-              <link
-                rel='preconnect'
-                href='https://cdnjs.cloudflare.com'
-                crossOrigin='anonymous'
-              />
-              <link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
-            </>
-          )}
           <link rel='preconnect' href='https://images.unsplash.com' />
           <link rel='dns-prefetch' href='//images.unsplash.com' />
 
           {/* 预加载字体 */}
           {BLOG.FONT_AWESOME && (
             <>
-              <link
-                rel='preload'
-                href={BLOG.FONT_AWESOME}
-                as='style'
-                crossOrigin='anonymous'
-              />
-              <link
-                id='font-awesome-css'
-                rel='stylesheet'
-                href={BLOG.FONT_AWESOME}
-                media='print'
-                crossOrigin='anonymous'
-                referrerPolicy='no-referrer'
-              />
               <style
                 dangerouslySetInnerHTML={{
                   __html:
-                    '@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-solid-900.woff2") format("woff2")}@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-regular-400.woff2") format("woff2")}@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-brands-400.woff2") format("woff2")}.fa,.fas,.far,.fab,.fa-solid,.fa-regular,.fa-brands{display:inline-block;min-width:1em;text-align:center}'
+                    '.fa,.fas,.far,.fab,.fa-solid,.fa-regular,.fa-brands{display:inline-flex;width:1.25em;min-width:1.25em;height:1em;align-items:center;justify-content:center;text-align:center;line-height:1;visibility:hidden}.fontawesome-ready .fa,.fontawesome-ready .fas,.fontawesome-ready .far,.fontawesome-ready .fab,.fontawesome-ready .fa-solid,.fontawesome-ready .fa-regular,.fontawesome-ready .fa-brands{visibility:visible}'
                 }}
               />
               <script
